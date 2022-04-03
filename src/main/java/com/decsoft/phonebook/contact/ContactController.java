@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RestController
@@ -24,10 +25,17 @@ public class ContactController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ContactResponse>> getContacts() {
-        List<Contact> contacts = contactService.getAllContacts();
+    public ResponseEntity<List<ContactResponse>> getContacts
+            (@RequestParam int page, @RequestParam Optional<String> input) {
+
+        List<Contact> contacts;
+        if (input.isPresent()) {
+            contacts = contactService.getContactsByInput(input.get(), page);
+        } else {
+            contacts = contactService.getAllContacts(page);
+        }
+
         List<ContactResponse> contactResponses = contactMapper.contactsToContactResponses(contacts);
         return ResponseEntity.ok(contactResponses);
     }
-
 }

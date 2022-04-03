@@ -1,5 +1,7 @@
 package com.decsoft.phonebook.contact;
 
+import com.decsoft.phonebook.contact.exceptions.ContactAlreadyExistsException;
+import com.decsoft.phonebook.contact.exceptions.ContactNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,7 +15,13 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(ContactAlreadyExistsException.class)
-    public void handleConflict(ContactAlreadyExistsException exception) {
-        log.error(exception.getMessage());
+    public void handleConflict(ContactAlreadyExistsException alreadyExistsException) {
+        log.error(alreadyExistsException.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ContactNotFoundException.class)
+    public void handleNotFound(ContactNotFoundException notFoundException) {
+        log.error(notFoundException.getMessage());
     }
 }
