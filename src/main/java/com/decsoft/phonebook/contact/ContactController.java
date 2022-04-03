@@ -44,6 +44,12 @@ public class ContactController {
         boolean created = contactService.updateContact(id, contactRequest);
         if (created)
             return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
-        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<HttpStatus> deleteContact(@PathVariable int id) {
+        contactService.deleteContact(id);
+        return new ResponseEntity<HttpStatus>(HttpStatus.NO_CONTENT);
     }
 }

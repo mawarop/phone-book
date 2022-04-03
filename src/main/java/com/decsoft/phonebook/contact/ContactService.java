@@ -13,4 +13,6 @@ public interface ContactService {
     List<Contact> getContactsByInput(String input, int page);
 
     boolean updateContact(long id, ContactRequest contactRequest);
+
+    void deleteContact(long id);
 }

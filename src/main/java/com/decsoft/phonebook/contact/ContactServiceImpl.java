@@ -69,4 +69,12 @@ public class ContactServiceImpl implements ContactService {
             return true;
         }
     }
+
+    @Override
+    public void deleteContact(long id) {
+        Optional<Contact> contact = contactRepository.findById(id);
+        if (contact.isPresent()) {
+            contactRepository.delete(contact.get());
+        } else throw new ContactNotFoundException(CONTACT_NOT_FOUND_MESSAGE);
+    }
 }
