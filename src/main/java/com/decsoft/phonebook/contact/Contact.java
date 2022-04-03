@@ -1,11 +1,18 @@
 package com.decsoft.phonebook.contact;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table
+@Getter
+@Setter
+@NoArgsConstructor
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,33 +45,5 @@ public class Contact {
         this.homePhoneNumber = homePhoneNumber;
         this.businessPhoneNumber = businessPhoneNumber;
         this.email = email;
-    }
-
-    public Contact() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getHomePhoneNumber() {
-        return homePhoneNumber;
-    }
-
-    public String getBusinessPhoneNumber() {
-        return businessPhoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
     }
 }
