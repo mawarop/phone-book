@@ -15,4 +15,12 @@ public interface ContactService {
     boolean updateContact(long id, ContactRequest contactRequest);
 
     void deleteContact(long id);
+
+    long getNumberOfAllContacts();
+
+    long getNumberOfAllContactsPages(long numberOfContacts);
+
+    long getNumberOfContactsByInput(String input);
+
+    long getNumberOfContactsPagesByInput(long numberOfContactsByInput);
 }

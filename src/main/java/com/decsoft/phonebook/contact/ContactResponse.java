@@ -17,6 +17,9 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 public class ContactResponse {
 
+    @NotBlank
+    private long id;
+
     @NotBlank(message = "Imię nie może być puste")
     @Size(min = 3)
     private String firstName;

@@ -4,7 +4,7 @@ import "./Form.css";
 import AuthService from "../services/AuthService";
 import {Button, Container, Form} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import axiosInstance from "../services/axiosInstance";
+import axios from "axios";
 
 
 function LoginFormPage(props) {
@@ -30,15 +30,14 @@ function LoginFormPage(props) {
                 .then((response) => {
                     console.log("odpowiedź");
                     if (response.status == 200) {
-                        axiosInstance.defaults.headers.common['Authorization'] = response.headers.authorization;
-                        axiosInstance.get()
+                        sessionStorage.setItem("jwtToken", response.headers.authorization);
                         setCredentialsFeedback("");
                         console.log("zalogowano!");
                         console.log(response.data.role);
-                        axiosInstance.get("api/v1/contacts?page=0").then(response => {
+                        axios.get("api/v1/contacts?page=0").then(response => {
                             console.log(response)
                         })
-
+                        navigate("/phone-book");
                     }
                 })
                 .catch((error) => {

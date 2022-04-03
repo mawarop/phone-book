@@ -24,6 +24,7 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     )
     List<Contact> findContactsByInput(@Param("input") String input, Pageable pageable);
 
+
     @Query("SELECT  c from Contact c WHERE " +
             "((LOWER(c.firstName) LIKE LOWER(CONCAT('%', :nameNumberOne, '%'))) " +
             "AND (LOWER(c.lastName) LIKE LOWER(CONCAT('%', :nameNumberTwo, '%'))))" +
@@ -33,4 +34,20 @@ public interface ContactRepository extends JpaRepository<Contact, Long> {
     )
     List<Contact> findContactsByInput(@Param("nameNumberOne") String nameNumberOne, @Param("nameNumberTwo") String nameNumberTwo, Pageable pageable);
 
+    @Query("SELECT count(c) from Contact c WHERE " +
+            "(LOWER(c.firstName) LIKE LOWER(CONCAT('%', :input, '%'))) " +
+            "OR (LOWER(c.lastName) LIKE LOWER(CONCAT('%', :input, '%'))) " +
+            "OR (LOWER(c.homePhoneNumber) LIKE LOWER(CONCAT('%', :input, '%'))) " +
+            "OR (LOWER(c.businessPhoneNumber) LIKE LOWER(CONCAT('%', :input, '%'))) " +
+            "OR (LOWER(c.email) LIKE LOWER(CONCAT('%', :input, '%')))"
+    )
+    long countContactsByInput(@Param("input") String input);
+
+    @Query("SELECT count(c) from Contact c WHERE " +
+            "((LOWER(c.firstName) LIKE LOWER(CONCAT('%', :nameNumberOne, '%'))) " +
+            "AND (LOWER(c.lastName) LIKE LOWER(CONCAT('%', :nameNumberTwo, '%'))))" +
+            "OR ((LOWER(c.firstName) LIKE LOWER(CONCAT('%', :nameNumberTwo, '%'))) " +
+            "AND (LOWER(c.lastName) LIKE LOWER(CONCAT('%', :nameNumberOne, '%')))) "
+    )
+    long countContactsByInput(@Param("nameNumberOne") String nameNumberOne, @Param("nameNumberTwo") String nameNumberTwo);
 }

@@ -15,4 +15,5 @@ public interface ContactMapper {
     List<ContactResponse> contactsToContactResponses(List<Contact> contacts);
 
     void updateContactFromContactRequest(ContactRequest contactRequest, @MappingTarget Contact contact);
+
 }

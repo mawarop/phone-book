@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -29,14 +31,26 @@ public class ContactController {
             (@RequestParam int page, @RequestParam Optional<String> input) {
 
         List<Contact> contacts;
+        long numberOfContacts;
+        long numberOfContactsPages;
         if (input.isPresent()) {
             contacts = contactService.getContactsByInput(input.get(), page);
+            numberOfContacts = contactService.getNumberOfContactsByInput(input.get());
+            numberOfContactsPages = contactService.getNumberOfContactsPagesByInput(numberOfContacts);
         } else {
             contacts = contactService.getAllContacts(page);
+            numberOfContacts = contactService.getNumberOfAllContacts();
+            numberOfContactsPages = contactService.getNumberOfAllContactsPages(numberOfContacts);
         }
 
         List<ContactResponse> contactResponses = contactMapper.contactsToContactResponses(contacts);
-        return ResponseEntity.ok(contactResponses);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("contacts", contactResponses);
+        response.put("totalContacts", numberOfContacts);
+        response.put("totalPages", numberOfContactsPages);
+        response.put("currentPage", page);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @PutMapping("{id}")

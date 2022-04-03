@@ -77,4 +77,38 @@ public class ContactServiceImpl implements ContactService {
             contactRepository.delete(contact.get());
         } else throw new ContactNotFoundException(CONTACT_NOT_FOUND_MESSAGE);
     }
+
+    @Override
+    public long getNumberOfAllContacts() {
+        return contactRepository.count();
+    }
+
+    @Override
+    public long getNumberOfAllContactsPages(long numberOfContacts) {
+        return (int) Math.ceil((double) numberOfContacts / (double) PAGE_SIZE);
+    }
+
+
+    @Override
+    public long getNumberOfContactsByInput(String input) {
+        List<String> splited;
+        long numbOfContacts;
+        if (input.contains(" ")) {
+            splited = Arrays.stream(input.split("\\s+")).toList();
+            String nameNumbOne = splited.get(0);
+            String nameNumbTwo = splited.get(1);
+            numbOfContacts = contactRepository.countContactsByInput(nameNumbOne, nameNumbTwo);
+        } else {
+            numbOfContacts = contactRepository.countContactsByInput(input);
+        }
+
+        if (numbOfContacts == 0)
+            throw new ContactNotFoundException(CONTACT_NOT_FOUND_MESSAGE);
+        return numbOfContacts;
+    }
+
+    @Override
+    public long getNumberOfContactsPagesByInput(long numberOfContactsByInput) {
+        return (long) Math.ceil((double) numberOfContactsByInput / (double) PAGE_SIZE);
+    }
 }
