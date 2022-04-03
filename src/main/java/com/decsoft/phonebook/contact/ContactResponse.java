@@ -10,11 +10,13 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContactRequest {
+public class ContactResponse {
+
     @NotBlank(message = "Imię nie może być puste")
     @Size(min = 3)
     private String firstName;
@@ -36,5 +38,4 @@ public class ContactRequest {
     @NotBlank
     @Email(message = "Niepoprawny email")
     private String email;
-
 }

@@ -3,6 +3,8 @@ package com.decsoft.phonebook.contact;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService {
@@ -18,6 +20,11 @@ public class ContactServiceImpl implements ContactService {
             throw new ContactAlreadyExistsException("Contact already exists in database");
         }
         contactRepository.save(newContact);
+    }
+
+    @Override
+    public List<Contact> getAllContacts() {
+        return contactRepository.findAll();
     }
 
 
