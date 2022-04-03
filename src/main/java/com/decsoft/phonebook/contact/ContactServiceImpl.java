@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ContactServiceImpl implements ContactService {
     public static final int PAGE_SIZE = 5;
+    public static final String CONTACT_NOT_FOUND_MESSAGE = "Contact not found in database";
+    public static final String CONTACT_ALREADY_EXISTS_MESSAGE = "Contact already exists in database";
     private final ContactMapper contactMapper;
     private final ContactRepository contactRepository;
 
@@ -22,7 +25,7 @@ public class ContactServiceImpl implements ContactService {
         Contact newContact = contactMapper.contactRequestToContact(contactRequest);
         boolean existsContactWithSameEmail = contactRepository.existsByEmail(newContact.getEmail());
         if (existsContactWithSameEmail) {
-            throw new ContactAlreadyExistsException("Contact already exists in database");
+            throw new ContactAlreadyExistsException(CONTACT_ALREADY_EXISTS_MESSAGE);
         }
         contactRepository.save(newContact);
     }
@@ -31,7 +34,7 @@ public class ContactServiceImpl implements ContactService {
     public List<Contact> getAllContacts(int page) {
         List<Contact> contacts = contactRepository.findAllContacts(PageRequest.of(page, PAGE_SIZE));
         if (contacts.isEmpty())
-            throw new ContactNotFoundException("Contact not found in database");
+            throw new ContactNotFoundException(CONTACT_NOT_FOUND_MESSAGE);
         return contacts;
     }
 
@@ -49,8 +52,21 @@ public class ContactServiceImpl implements ContactService {
         }
 
         if (contacts.isEmpty())
-            throw new ContactNotFoundException("Contact not found in database");
+            throw new ContactNotFoundException(CONTACT_NOT_FOUND_MESSAGE);
         return contacts;
     }
 
+    @Override
+    public boolean updateContact(long id, ContactRequest contactRequest) {
+        Optional<Contact> contact = contactRepository.findById(id);
+        if (contact.isPresent()) {
+            contactMapper.updateContactFromContactRequest(contactRequest, contact.get());
+            contactRepository.save(contact.get());
+            return false;
+        } else {
+            Contact newContact = contactMapper.contactRequestToContact(contactRequest);
+            contactRepository.save(newContact);
+            return true;
+        }
+    }
 }

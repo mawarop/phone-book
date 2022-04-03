@@ -38,4 +38,12 @@ public class ContactController {
         List<ContactResponse> contactResponses = contactMapper.contactsToContactResponses(contacts);
         return ResponseEntity.ok(contactResponses);
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity<HttpStatus> updateContact(@PathVariable("id") long id, @RequestBody @Valid ContactRequest contactRequest) {
+        boolean created = contactService.updateContact(id, contactRequest);
+        if (created)
+            return new ResponseEntity<HttpStatus>(HttpStatus.CREATED);
+        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+    }
 }

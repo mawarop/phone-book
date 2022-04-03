@@ -11,4 +11,6 @@ public interface ContactService {
     List<Contact> getAllContacts(int page);
 
     List<Contact> getContactsByInput(String input, int page);
+
+    boolean updateContact(long id, ContactRequest contactRequest);
 }
