@@ -1,7 +1,5 @@
 package com.decsoft.phonebook.contact;
 
-import com.decsoft.phonebook.contact.exceptions.ContactAlreadyExistsException;
-import com.decsoft.phonebook.contact.exceptions.ContactNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;

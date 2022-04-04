@@ -1,8 +1,6 @@
 package com.decsoft.phonebook.contact;
 
 
-import com.decsoft.phonebook.contact.exceptions.ContactAlreadyExistsException;
-
 import java.util.List;
 
 public interface ContactService {

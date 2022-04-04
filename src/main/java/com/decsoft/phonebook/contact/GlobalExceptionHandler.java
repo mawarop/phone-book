@@ -1,7 +1,5 @@
 package com.decsoft.phonebook.contact;
 
-import com.decsoft.phonebook.contact.exceptions.ContactAlreadyExistsException;
-import com.decsoft.phonebook.contact.exceptions.ContactNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
