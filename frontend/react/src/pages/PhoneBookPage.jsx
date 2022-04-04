@@ -78,6 +78,7 @@ function PhoneBookPage(props) {
 
     function createContactHandler() {
         setModalTitle("Dodaj Kontakt");
+        setContactForAction(null);
         setShow(true);
     }
 
@@ -114,18 +115,17 @@ function PhoneBookPage(props) {
                 </Form>
 
 
-
-                <Table className="my-3" striped bordered hover>
-                    <thead>
-                    <tr>
-                        <th>Imię</th>
-                        <th>Nazwisko</th>
-                        <th>Numer telefonu domowego</th>
-                        <th>Numer telefonu służbowego</th>
-                        <th>Email</th>
-                        <th colSpan={2}>Akcje</th>
-                    </tr>
-                    </thead>
+            <Table className="my-3 text-center" striped bordered hover>
+                <thead>
+                <tr>
+                    <th>Imię</th>
+                    <th>Nazwisko</th>
+                    <th>Numer telefonu domowego</th>
+                    <th>Numer telefonu służbowego</th>
+                    <th>Email</th>
+                    <th colSpan={2}>Akcje</th>
+                </tr>
+                </thead>
 
                     <tbody>
 
